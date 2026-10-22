@@ -1,6 +1,13 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Has an action bar (needed for the toolbar menu and back arrows) -->
     <style name="Theme.SmartPantry" parent="Theme.Material3.DayNight">
-        <item name="colorPrimary">#CE93D8</item>
+        <item name="colorPrimary">@color/brand_main</item>
+        <item name="colorOnPrimary">@color/white</item>
+        <item name="actionBarStyle">@style/MyActionBar</item>
+        <item name="android:statusBarColor">@color/brand_dark</item>
+    </style>
+
+    <style name="MyActionBar" parent="Widget.Material3.ActionBar.Solid">
+        <item name="background">@color/brand_main</item>
+        <item name="theme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
     </style>
 </resources>
