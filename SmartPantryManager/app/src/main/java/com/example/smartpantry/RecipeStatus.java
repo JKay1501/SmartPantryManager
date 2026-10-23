@@ -27,5 +27,13 @@ public class RecipeStatus {
         }
 
 
-    
+    public static void sortByReadiness(java.util.List<RecipeStatus> list) {
+        java.util.Collections.sort(list, (a, b) -> {
+            if (a.problemCount != b.problemCount) {
+                return Integer.compare(a.problemCount, b.problemCount);
+            }
+            return a.recipe.name.compareTo(b.recipe.name);
+        });
+    }
+
 }
