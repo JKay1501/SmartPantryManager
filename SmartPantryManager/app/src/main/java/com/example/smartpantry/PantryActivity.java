@@ -76,7 +76,10 @@ public class PantryActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_suggested) {
+        if (item.getItemId() == R.id.action_all) {
+            startActivity(new Intent(this, AllRecipesActivity.class));
+            return true;
+        } else if (item.getItemId() == R.id.action_suggested) {
             startActivity(new Intent(this, SuggestedActivity.class));
             return true;
         } else if (item.getItemId() == R.id.action_settings) {
