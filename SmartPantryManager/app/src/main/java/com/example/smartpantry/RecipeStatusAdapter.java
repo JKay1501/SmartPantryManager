@@ -24,6 +24,11 @@ public class RecipeStatusAdapter extends RecyclerView.Adapter<RecipeStatusAdapte
     public RecipeStatusAdapter(List<RecipeStatus> items, Listener listener) {
         this.items = items;
         this.listener = listener;
+    }
+
+    static class VH extends RecyclerView.ViewHolder {
+        TextView name, message;
+        VH(View v) {
             super(v);
             name = v.findViewById(R.id.tvStatusName);
             message = v.findViewById(R.id.tvStatusMessage);
