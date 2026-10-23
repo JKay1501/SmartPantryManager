@@ -131,6 +131,48 @@ public class DbHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    /**
+     * Returns EVERY recipe with a status. A message is only added when
+     * exactly ONE ingredient is missing or too low.
+     */
+    public List<RecipeStatus> getRecipeStatuses() {
+        // add up what the pantry holds: "tomato|pcs" -> 3.0
+        Map<String, Double> have = new HashMap<>();
+        for (Item i : getAllItems()) {
+            String key = norm(i.name) + "|" + i.unit;
+            have.put(key, have.getOrDefault(key, 0.0) + i.qty);
+        }
+
+        List<RecipeStatus> result = new ArrayList<>();
+        SQLiteDatabase db = getReadableDatabase();
+        Cursor r = db.rawQuery("SELECT id,name,steps FROM recipes", null);
+        while (r.moveToNext()) {
+            int problems = 0;
+            String problemText = "";
+            Cursor c = db.rawQuery("SELECT name,qty,unit FROM recipe_ing WHERE recipe_id=?",
+                    new String[]{String.valueOf(r.getLong(0))});
+            while (c.moveToNext()) {
+                double need = c.getDouble(1);
+                Double got = have.get(norm(c.getString(0)) + "|" + c.getString(2));
+                double haveQty = (got == null) ? 0 : got;
+                if (haveQty < need) { // missing completely, or not enough
+                    problems++;
+                    problemText = RecipeStatus.shortageMessage(c.getString(0), need, haveQty, c.getString(2));
+                }
+            }
+            c.close();
+
+            Recipe recipe = new Recipe(r.getLong(0), r.getString(1), r.getString(2));
+            String message = null; // 2 or more problems: no message on purpose
+            if (problems == 0) message = "You have everything you need!";
+            else if (problems == 1) message = problemText;
+            result.add(new RecipeStatus(recipe, problems == 0, problems, message));
+        }
+        r.close();
+        RecipeStatus.sortByReadiness(result);
+        return result;
+    }
+
     // ---------- Seed data (runs once, on first launch) ----------
     private void seed(SQLiteDatabase db) {
         add(db, "Scrambled Eggs", "1. Beat the eggs with salt.\n2. Melt butter in a pan.\n3. Stir eggs gently until set.", "egg:2:pcs", "butter:10:g", "salt:2:g");

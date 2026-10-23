@@ -36,4 +36,13 @@ public class RecipeStatus {
         });
     }
 
+    // Builds the "what exactly is missing" text for ONE ingredient.
+    // need = amount the recipe wants, have = amount in the pantry (0 if none)
+    public static String shortageMessage(String name, double need, double have, String unit) {
+        if (have <= 0) {
+            return "Missing: " + formatQty(need) + " " + unit + " " + name;
+        }
+        return "Short of: " + formatQty(need - have) + " " + unit + " " + name
+                + " (you have " + formatQty(have) + ", need " + formatQty(need) + ")";
+    }
 }
