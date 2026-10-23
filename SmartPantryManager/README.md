@@ -8,6 +8,7 @@ you can cook right now with the ingredients available - no shopping trip needed 
 - 16 pre-loaded recipes
 - "Suggested Recipes" uses STRICT matching: every ingredient must be in the pantry in the required quantity
 - Recipe detail screen, settings screen (expiry highlight toggle)
+- "All Recipes" screen shows every recipe with its status. Recipes you can make are shown in green, and recipes missing exactly one ingredient show what you are short of and by how much (e.g. "Short of: 30g cheese")
 
 ## Database: SQLite (SQLiteOpenHelper)
 Chosen because it is local, needs no internet or server, persists after the app is closed,
