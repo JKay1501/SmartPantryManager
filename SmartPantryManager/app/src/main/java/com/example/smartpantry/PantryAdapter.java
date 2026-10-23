@@ -57,7 +57,7 @@ public class PantryAdapter extends RecyclerView.Adapter<PantryAdapter.VH> {
         if (item.expiry != null && !item.expiry.isEmpty()) text += "  |  Expires: " + item.expiry;
         if (soon) text += "  (EXPIRING SOON)";
         h.detail.setText(text);
-        h.detail.setTextColor(soon ? Color.RED : Color.DKGRAY);
+        h.detail.setTextColor(soon ? Color.parseColor("#C62828") : Color.DKGRAY);
         h.itemView.setOnClickListener(v -> listener.onEdit(item));
         h.delete.setOnClickListener(v -> listener.onDelete(item));
     }
