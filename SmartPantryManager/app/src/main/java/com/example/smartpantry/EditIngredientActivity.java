@@ -73,7 +73,7 @@ public class EditIngredientActivity extends AppCompatActivity {
 
         Item item = new Item(editId, name, qty, unit, expiry);
         if (editId == -1) db.addItem(item); else db.updateItem(item);
-        Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Saved Ingredient", Toast.LENGTH_SHORT).show();
         finish();
     }
 
